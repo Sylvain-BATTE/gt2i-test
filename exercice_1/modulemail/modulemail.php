@@ -2,25 +2,26 @@
 
 class modulemail extends Module {
 
-
+    // Contructeur du module contenant les différentes informations de celui-ci
     public function __construct() {
-        $this->name = 'moduleMail'; // Doit correspondre au nom du module, dans notre cas : monmodule
-        $this->tab = 'emailing'; // Correspond à l'onglet de catégorisation du module, pour tous les connaitre : https://devdocs.prestashop.com/1.7/modules/creation/
-        $this->version = '1.0'; // Version actuelle du module
-        $this->author = 'Sylvain Batte'; // L'auteur
-        $this->ps_versions_compliancy = array( // Permet de limiter les versions compatibles
+        $this->name = 'moduleMail'; 
+        $this->tab = 'emailing'; 
+        $this->version = '1.0'; 
+        $this->author = 'Sylvain Batte'; 
+        $this->ps_versions_compliancy = array( 
             'min' => '1.7',
             'max' => _PS_VERSION_
         );
         parent::__construct();
     
-        $this->displayName = $this->l('Module Mail'); // Nom d'affichage
-        $this->description = $this->l('Envoie un mail à chaque modification de quantité d\'un produit'); // Description du module
+        $this->displayName = $this->l('Module Mail'); 
+        $this->description = $this->l('Envoie un mail à chaque modification de quantité d\'un produit'); 
         $this->confirmUninstall = $this->l('Êtes-vous sûr de vouloir désinstaller ce module ?');
     }
 
+    // Fonction d'installation
     public function install() {
-        $this->registerHook('actionUpdateQuantity');
+        $this->registerHook('actionUpdateQuantity'); // On installe le module
 
         if (parent::install()) {
             return true;
@@ -28,6 +29,7 @@ class modulemail extends Module {
         return false;
     }
  
+    // Fonction de désinstallation 
     public function uninstall() {
         if (parent::uninstall()) {
             return true;
@@ -35,10 +37,14 @@ class modulemail extends Module {
         return false;
     }
 
+    // Hook permettant de faire fonctionner le module
     public function hookActionUpdateQuantity($params) {
+
+        // On récupère les différents attributs du produit modifié
         $id_product = $params["id_product"];
         $quantity = $params["quantity"];
 
+        // Fonction permettant d'envoyer un mail
         Mail::send(
             (int)(Configuration::get('PS_LANG_DEFAULT')),
             'contact',

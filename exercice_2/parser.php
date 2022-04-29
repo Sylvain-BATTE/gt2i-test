@@ -2,8 +2,11 @@
   require("MagicParser.php");
   require("bdd.php");
 
+  // Fonction appelée lors de l'appel de la fonction MagicParser_parse()
   function myRecordHandler($record)
   {
+
+    // On récupère toutes les différentes catégories que l'on met dans des variables
     $PRODUIT_POCLEUNIK = $record["PRODUIT_POCLEUNIK"];
     $PRODUIT_REF = $record["PRODUIT_REF"];
     $REFCIALE_ARCLEUNIK = $record["REFCIALE_ARCLEUNIK"];
@@ -30,6 +33,7 @@
     $ARTICLE_HNORMEL = $record["ARTICLE_HNORMEL"];
     $ARTICLE_CATEG = $record["ARTICLE_CATEG"];
     
+    // Fonction sql qui va insérer un produit avec ses différents attributs
     $sql = "INSERT INTO catalogue (PRODUIT_POCLEUNIK, PRODUIT_REF, REFCIALE_ARCLEUNIK, REFCIALE_REFART, REFCIALE_REFCAT, 
                                    POTRAD_DESI, REFCIALE_CTVA, FICTECH_MEMOCAT, FICTECH_MEMONET, PRODUIT_MARQUE, PRODUIT_CLEP01,
                                    PRODUIT_CLEP02, PRODUIT_CLEP03, PRODUIT_CLEP04, PRODUIT_CLEP06, PRODUIT_CLEP07, PRODUIT_GCOLORIS,
@@ -41,6 +45,7 @@
                     \"$PRODUIT_GCOLORIS\", \"$PRODUIT_GTAILLE\", \"$PRODUIT_CLEP12\", \"$REFCIALE_FICHEINA\", \"$REFCIALE_MODTE\", 
                     \"$PRODUIT_MODTE\", \"$ARTICLE_POIDS\", \"$ARTICLE_HNORMEL\", \"$ARTICLE_CATEG\")";
 
+    // On prépare la requette et on l'exécute
     $requette = BDD::getPDO()->prepare($sql);
     $requette->execute();
   }

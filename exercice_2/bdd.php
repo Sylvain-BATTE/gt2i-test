@@ -6,6 +6,7 @@ class BDD {
 
     public static function init(){
 
+        // Identifiants pour se connecter à la base de donnée (dans ce cas ma base de données personnelle)
         $hostname = 'localhost';
         $database_name = 'gt2i';
         $login = 'host';
